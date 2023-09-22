@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "327947829403",
+    "project_id": "flambus-4bcf1",
+    "storage_bucket": "flambus-4bcf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327947829403:android:179545b35d60c567c2c63e",
+        "android_client_info": {
+          "package_name": "com.flambus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvn_p_sbftgNFesf5g5CTa34sn_B-BsHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,7 +11,6 @@ function Navigator() {
         <RootNavigator />
       </NavigationContainer>
     </QueryClientProvider>
-    
   );
 }
 

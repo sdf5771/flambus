@@ -1,48 +1,48 @@
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Screen from '../components/Screen';
-// import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-// import {faHouse, faSearch, faBell, faUser} from '@fortawesome/free-solid-svg-icons';
+import { LocationLogo, SearchLogo, CommunityLogo, MyPageLogo } from '../assets/bottom-tab-navigator/svg-components';
 
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
 	return (
-		<Tab.Navigator initialRouteName="홈" screenOptions={{headerShown: false}}>
+		<Tab.Navigator initialRouteName="홈" screenOptions={{headerShown: false, tabBarShowLabel: false,}}>
 			<Tab.Screen
-				name="홈"
-				component={Screen.HomeScreen}
-				// options={{
-				// 	tabBarIcon: ({color, size}) => (
-				// 		<FontAwesomeIcon icon={faHouse} size={size} color={color} />
-				// 	),
-				// }}
+				name="지도"
+				component={Screen.LocationScreen}
+				options={{
+					tabBarIcon: ({focused, color, size}) => (
+						<LocationLogo color={focused ? "#FFBA33" : "#CCCCCC"}/>
+					),
+				}}
 			/>
 			<Tab.Screen
-				name="검색"
+				name="상세검색"
 				component={Screen.SearchScreen}
-				// options={{
-				// 	tabBarIcon: ({color, size}) => (
-				// 		<FontAwesomeIcon icon={faSearch} size={size} color={color} />
-				// 	),
-				// }}
+				options={{
+					tabBarIcon: ({focused, color, size}) => (
+						<SearchLogo color={focused ? "#FFBA33" : "#CCCCCC"}/>
+					),
+				}}
 			/>
 			<Tab.Screen
-				name="소식"
-				component={Screen.NewsScreen}
-				// options={{
-				// 	tabBarIcon: ({color, size}) => (
-				// 		<FontAwesomeIcon icon={faBell} size={size} color={color} />
-				// 	),
-				// }}
+				name="커뮤니티"
+				component={Screen.CommunityScreen}
+				options={{
+					tabBarIcon: ({focused, color, size}) => (
+						<CommunityLogo color={focused ? "#FFBA33" : "#CCCCCC"}/>
+					),
+				}}
 			/>
 			<Tab.Screen
-				name="내 정보"
-				component={Screen.UserInfoScreen}
-				// options={{
-				// 	tabBarIcon: ({color, size}) => (
-				// 		<FontAwesomeIcon icon={faUser} size={size} color={color} />
-				// 	),
-				// }}
+				name="마이페이지"
+				component={Screen.MyPageScreen}
+				options={{
+					tabBarIcon: ({focused, color, size}) => (
+						<MyPageLogo color={focused ? "#FFBA33" : "#CCCCCC"}/>
+					),
+				}}
 			/>
 		</Tab.Navigator>
 	);
