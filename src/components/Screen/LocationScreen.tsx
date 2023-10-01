@@ -10,6 +10,7 @@ function LocationScreen({navigation}) {
 			/>
 			<View style={{flex: 1}}>
 				<Organisms.LocationSearch />
+				<Organisms.AcornView />
 				<Organisms.KakaoMapView />
 			</View>
 		</>

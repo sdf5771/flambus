@@ -12,7 +12,7 @@ function KakaoMapView(){
             <WebView 
                 style={styles.webView}
                 originWhitelist={['*']}
-                source={{uri: 'http://192.168.45.99:3000/kakaomap'}}
+                source={{uri: 'http://192.168.45.59:3000/kakaomap'}}
                 scrollEnabled={false}
             />
         </View>
