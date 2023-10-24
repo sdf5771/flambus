@@ -1,7 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { View, StyleSheet, Dimensions, Alert } from 'react-native';
 import WebView from 'react-native-webview';
 import RNLocation from 'react-native-location';
+import { useQuery } from '@tanstack/react-query';
+import { getStoreMapData } from '../../queries';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -26,7 +28,15 @@ RNLocation.configure({
     showsBackgroundLocationIndicator: false,
 })
 
+type TLocation = {
+    latitude: number,
+    longitude: number,
+}
+
 function KakaoMapView(){
+    const webviewRef = useRef<WebView | null>(null);
+    const [location, setLocation] = useState<TLocation | null>(null);
+    const {data: mapData, isLoading: mapDataIsLoading, error: mapDataIsError} = useQuery(['mapData', location?.latitude, location?.longitude] , () => getStoreMapData());
 
     useEffect(() => {
         RNLocation.requestPermission({
@@ -63,13 +73,26 @@ function KakaoMapView(){
                 .then(latestLocation => {
                     // Use the location here
                     console.log('로케이션 값 ', latestLocation)
+                    if(latestLocation){
+                        setLocation({latitude: latestLocation?.latitude, longitude: latestLocation?.longitude});
+                    }
                 })
             })
     }, [])
+
+    console.log('mapData ', mapData)
+    console.log('mapDataIsLoading ', mapDataIsLoading)
+    console.log('mapDataIsError ', mapDataIsError)
+
+    //marker data post
+    if(mapData && !mapDataIsLoading){
+        webviewRef.current?.postMessage(mapData);
+    }
     
     return (
         <View style={styles.rootContainer}>
             <WebView 
+                ref={webviewRef}
                 style={styles.webView}
                 originWhitelist={['*']}
                 source={{uri: 'http://localhost:3000/kakaomap'}}
