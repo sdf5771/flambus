@@ -29,8 +29,8 @@ RNLocation.configure({
 })
 
 type TLocation = {
-    latitude: number,
-    longitude: number,
+    lat: number,
+    lng: number,
 }
 
 function KakaoMapView(){
@@ -74,21 +74,30 @@ function KakaoMapView(){
                     // Use the location here
                     console.log('로케이션 값 ', latestLocation)
                     if(latestLocation){
-                        setLocation({latitude: latestLocation?.latitude, longitude: latestLocation?.longitude});
+                        setLocation({lat: Math.round(latestLocation?.latitude), lng: latestLocation?.longitude});
                     }
                 })
             })
     }, [])
 
-    console.log('mapData ', mapData)
-    console.log('mapDataIsLoading ', mapDataIsLoading)
-    console.log('mapDataIsError ', mapDataIsError)
+    useEffect(() => {
+        if(location){
+            webviewRef.current?.postMessage(JSON.stringify({
+                type: "map location",
+                data: location,
+            }))
+        }
 
-    //marker data post
-    if(mapData && !mapDataIsLoading){
-        webviewRef.current?.postMessage(mapData);
-    }
-    
+        //marker data post
+        if(mapData && !mapDataIsLoading){
+            console.log('mapData ', mapData)
+            webviewRef.current?.postMessage(JSON.stringify({
+                data: mapData.data,
+                type: "marker Data"
+            }));
+        }
+    }, [mapDataIsLoading])
+
     return (
         <View style={styles.rootContainer}>
             <WebView 
@@ -97,6 +106,7 @@ function KakaoMapView(){
                 originWhitelist={['*']}
                 source={{uri: 'http://localhost:3000/kakaomap'}}
                 scrollEnabled={false}
+                javaScriptEnabled={true}
             />
         </View>
     )

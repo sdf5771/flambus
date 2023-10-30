@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useImperativeHandle } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useImperativeHandle } from 'react'
 import { Dimensions, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import { Gesture, GestureDetector, GestureEventPayload, GestureUpdateEvent } from 'react-native-gesture-handler'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
@@ -7,8 +7,7 @@ const {height: SCREEN_HEIGHT} = Dimensions.get('window')
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 50
 
-
-const BottomSheet = () => {
+const BottomSheet = ({ChildrenComponent}: {ChildrenComponent: () => React.ReactNode}) => {
     const translateY = useSharedValue(0)
 
     const scrollTo = useCallback((destination: number) => {
@@ -55,6 +54,7 @@ const BottomSheet = () => {
         <GestureDetector gesture={gesture}>
             <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
                 <View style={styles.line} />
+                {ChildrenComponent ? <ChildrenComponent /> : null}
             </Animated.View>
         </GestureDetector>
     )
