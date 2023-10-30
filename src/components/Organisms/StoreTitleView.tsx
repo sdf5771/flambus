@@ -22,17 +22,17 @@ export default function StoreTitleView() {
         <View style={styles.titleHeader}>
             <View>
 
-                <Text>신선했던</Text>
+                <Text style={styles.freshStoreText}>신선했던</Text>
             </View>
             <View>
 
-                <Text>나만의 탐험지 지정</Text>
+                <Text style={styles.favStoreText}>나만의 탐험지 지정</Text>
             </View>
         </View>
 
         <View style={styles.storeTitleContainer}>
             <Text style={styles.titleTextStyle}>긴자료코 경산 하점점</Text>
-            <View style={{display: 'flex', flexDirection: 'row'}}>
+            <View style={{display: 'flex', flexDirection: 'row', marginTop: 8}}>
                 <View>
                     <Text style={styles.defaultBoldText}>16</Text>
                 </View>
@@ -50,11 +50,11 @@ export default function StoreTitleView() {
 
       <View style={{display: 'flex', flexDirection: 'column'}}>
         <View style={{display: 'flex', flexDirection: 'row'}}>
-            <Text style={[{width: 50}, styles.defaultBoldText]}>주소</Text>
+            <Text style={[{width: 55}, styles.defaultBoldText]}>주소</Text>
             <Text style={styles.defaultSemiText}>경북 경산시 하양읍 서사도리9로 25 드림스퀘어 1106호</Text>
         </View>
-        <View style={{display: 'flex', flexDirection: 'row', marginBottom: 16}}>
-            <Text style={[{width: 50}, styles.defaultBoldText]}>전화번호</Text>
+        <View style={{display: 'flex', flexDirection: 'row', marginVertical: 16}}>
+            <Text style={[{width: 55}, styles.defaultBoldText]}>전화번호</Text>
             <Text style={styles.defaultSemiText}>053-123-4567</Text>
         </View>
       </View>
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     storeTitleContainer: {
+        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
@@ -105,12 +106,24 @@ const styles = StyleSheet.create({
         lineHeight: 22,
         color: '#333333',
     },
+    favStoreText: {
+        fontWeight: '600',
+        fontSize: 12,
+        textDecorationLine: 'underline',
+        color: '#1A1A1A'
+    },
     lineHorizontal: {
         width: '100%',
         height: 1,
         backgroundColor: '#F1F1F1',
         alignSelf: 'center',
         marginVertical: 16,
+    },
+    freshStoreText: {
+        fontWeight: '700',
+        fontSize: 10,
+        lineHeight: 12,
+        color: '#B77719'
     },
     lineVertical: {
         width: 1,
