@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     titleTextStyle: {
-        // fontFamily: 'Pretendard',
         fontWeight: '700',
         fontSize: 24,
         lineHeight: 32,
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 12,
         textDecorationLine: 'underline',
-        color: '#1A1A1A'
+        color: '#1A1A1A',
     },
     lineHorizontal: {
         width: '100%',

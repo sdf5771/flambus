@@ -4,6 +4,7 @@ import WebView from 'react-native-webview';
 import RNLocation from 'react-native-location';
 import { useQuery } from '@tanstack/react-query';
 import { getStoreMapData } from '../../queries';
+import {handleWebview} from '../../hooks';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -35,6 +36,7 @@ type TLocation = {
 
 function KakaoMapView(){
     const webviewRef = useRef<WebView | null>(null);
+    const {sendMessage} = handleWebview();
     const [location, setLocation] = useState<TLocation | null>(null);
     const {data: mapData, isLoading: mapDataIsLoading, error: mapDataIsError} = useQuery(['mapData', location?.latitude, location?.longitude] , () => getStoreMapData());
 
@@ -81,20 +83,20 @@ function KakaoMapView(){
     }, [])
 
     useEffect(() => {
-        if(location){
-            webviewRef.current?.postMessage(JSON.stringify({
-                type: "map location",
-                data: location,
-            }))
-        }
+        // if(location){
+        //     webviewRef.current?.postMessage(JSON.stringify({
+        //         type: "map location",
+        //         data: location,
+        //     }))
+        // }
 
         //marker data post
         if(mapData && !mapDataIsLoading){
-            console.log('mapData ', mapData)
-            webviewRef.current?.postMessage(JSON.stringify({
+            sendMessage({
+                webViewRef: webviewRef,
+                type: 'marker Data',
                 data: mapData.data,
-                type: "marker Data"
-            }));
+            })
         }
     }, [mapDataIsLoading])
 
@@ -107,6 +109,32 @@ function KakaoMapView(){
                 source={{uri: 'http://localhost:3000/kakaomap'}}
                 scrollEnabled={false}
                 javaScriptEnabled={true}
+                onMessage={(message) => {
+                    console.log('message ', message.nativeEvent.data)
+                }}
+                //DOM에서 웹뷰가 로딩 전에 GPS 경로를 window.ReactNativeWebView 객체 내부에 삽입
+                // injectedJavaScriptBeforeContentLoaded={`(function(){
+                //     window.ReactNativeWebView.locationData = {
+                //         "lat": ${location?.lat}, 
+                //         "lng": ${location?.lng},
+                //     }
+                // })();`}
+                injectedJavaScript={`(function(){
+                    window.ReactNativeWebView.locationData = {
+                        "lat": ${location?.lat}, 
+                        "lng": ${location?.lng},
+                    }
+                })();`}
+                // onLoadProgress={() => {
+                //     sendMessage({
+                //         webViewRef: webviewRef,
+                //         type: 'map location',
+                //         data: {
+                //             "lat": location?.lat, 
+                //             "lng": location?.lng,
+                //         },
+                //     })
+                // }}
             />
         </View>
     )
