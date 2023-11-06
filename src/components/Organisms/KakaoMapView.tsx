@@ -76,7 +76,7 @@ function KakaoMapView(){
                     // Use the location here
                     console.log('로케이션 값 ', latestLocation)
                     if(latestLocation){
-                        setLocation({lat: Math.round(latestLocation?.latitude), lng: latestLocation?.longitude});
+                        setLocation({lat: latestLocation?.latitude, lng: latestLocation?.longitude});
                     }
                 })
             })
@@ -128,8 +128,8 @@ function KakaoMapView(){
                 //DOM에서 웹뷰가 로딩 전에 GPS 경로를 window.ReactNativeWebView 객체 내부에 삽입
                 injectedJavaScript={`(function(){
                     window.ReactNativeWebView.locationData = {
-                        "lat": ${location?.lat}, 
-                        "lng": ${location?.lng},
+                        "lat": ${location?.lat.toString()}, 
+                        "lng": ${location?.lng.toString()},
                     }
                 })();`}
             />
