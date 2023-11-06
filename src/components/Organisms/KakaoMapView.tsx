@@ -38,7 +38,7 @@ function KakaoMapView(){
     const webviewRef = useRef<WebView | null>(null);
     const {sendMessage} = handleWebview();
     const [location, setLocation] = useState<TLocation | null>(null);
-    const {data: mapData, isLoading: mapDataIsLoading, error: mapDataIsError} = useQuery(['mapData', location?.latitude, location?.longitude] , () => getStoreMapData());
+    const {data: mapData, isLoading: mapDataIsLoading, error: mapDataIsError} = useQuery(['mapData', location?.lat, location?.lng] , () => getStoreMapData());
 
     useEffect(() => {
         RNLocation.requestPermission({
@@ -92,6 +92,7 @@ function KakaoMapView(){
 
         //marker data post
         if(mapData && !mapDataIsLoading){
+            console.log(mapData.data)
             sendMessage({
                 webViewRef: webviewRef,
                 type: 'marker Data',
@@ -110,31 +111,27 @@ function KakaoMapView(){
                 scrollEnabled={false}
                 javaScriptEnabled={true}
                 onMessage={(message) => {
-                    console.log('message ', message.nativeEvent.data)
+                    const receiveData = JSON.parse(message.nativeEvent.data)
+                    if(receiveData && receiveData){
+                        console.log('locationData received ', receiveData)
+                        switch (receiveData){
+                            case 'locationData received':
+                                sendMessage({
+                                    webViewRef: webviewRef,
+                                    type: 'marker Data',
+                                    data: mapData.data,
+                                })
+                                break
+                        }
+                    }
                 }}
                 //DOM에서 웹뷰가 로딩 전에 GPS 경로를 window.ReactNativeWebView 객체 내부에 삽입
-                // injectedJavaScriptBeforeContentLoaded={`(function(){
-                //     window.ReactNativeWebView.locationData = {
-                //         "lat": ${location?.lat}, 
-                //         "lng": ${location?.lng},
-                //     }
-                // })();`}
                 injectedJavaScript={`(function(){
                     window.ReactNativeWebView.locationData = {
                         "lat": ${location?.lat}, 
                         "lng": ${location?.lng},
                     }
                 })();`}
-                // onLoadProgress={() => {
-                //     sendMessage({
-                //         webViewRef: webviewRef,
-                //         type: 'map location',
-                //         data: {
-                //             "lat": location?.lat, 
-                //             "lng": location?.lng,
-                //         },
-                //     })
-                // }}
             />
         </View>
     )
