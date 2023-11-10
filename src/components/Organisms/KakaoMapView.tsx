@@ -2,9 +2,11 @@ import React, {useEffect, useRef, useState} from 'react';
 import { View, StyleSheet, Dimensions, Alert } from 'react-native';
 import WebView from 'react-native-webview';
 import RNLocation from 'react-native-location';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getStoreMapData } from '../../queries';
 import {handleWebview} from '../../hooks';
+import useStoreDetailScreenStore from '../../Stores/useStoreDetailScreenStore';
+import getStoreDetailData from '../../queries/getStoreDetailData';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -39,7 +41,23 @@ function KakaoMapView(){
     const {sendMessage} = handleWebview();
     const [location, setLocation] = useState<TLocation | null>(null);
     const {data: mapData, isLoading: mapDataIsLoading, error: mapDataIsError} = useQuery(['mapData', location?.lat, location?.lng] , () => getStoreMapData());
+    const {isUsed, setIsUsed, setStoreData} = useStoreDetailScreenStore();
+    const [isSendLocation, setIsSendLocation] = useState(false);
+    const {mutate, isLoading, isSuccess, isError} = useMutation(getStoreDetailData,{
+        onSuccess(data, variables, context) {
+            console.log('data ', data.data);
+            if(isUsed){
+                setIsUsed(false)
+            }
 
+            setStoreData(data.data)
+            setIsUsed(true)
+        },
+        onError(){
+            
+        }
+    });
+    
     useEffect(() => {
         RNLocation.requestPermission({
             ios: 'whenInUse', // or 'always'
@@ -113,14 +131,23 @@ function KakaoMapView(){
                 onMessage={(message) => {
                     const receiveData = JSON.parse(message.nativeEvent.data)
                     if(receiveData && receiveData){
-                        console.log('locationData received ', receiveData)
-                        switch (receiveData){
+                        console.log('receiveData ', receiveData)
+                        switch (receiveData.type){
                             case 'locationData received':
-                                sendMessage({
-                                    webViewRef: webviewRef,
-                                    type: 'marker Data',
-                                    data: mapData.data,
-                                })
+                                if(!isSendLocation){
+                                    sendMessage({
+                                        webViewRef: webviewRef,
+                                        type: 'marker Data',
+                                        data: mapData.data,
+                                    })
+                                    setIsSendLocation(true)
+                                }
+                                break
+                            case 'mapmarker data clicked':
+                                if(receiveData.data.storeIdx){
+                                    mutate({storeIdx: receiveData.data.storeIdx})
+                                }
+                                
                                 break
                         }
                     }

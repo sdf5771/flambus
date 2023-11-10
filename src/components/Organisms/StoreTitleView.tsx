@@ -14,7 +14,7 @@ type TStoreTitleViewProps = {
     "representJournal": null
 }
 
-export default function StoreTitleView() {
+export default function StoreTitleView({storeIdx, storeName, storeAddress, contactNumber, expJournalsCount, ownExpSiteCount, representTag, representJournal}: TStoreTitleViewProps) {
   return (
     <View style={styles.root}>
       <View style={styles.titleContainer}>
@@ -31,15 +31,15 @@ export default function StoreTitleView() {
         </View>
 
         <View style={styles.storeTitleContainer}>
-            <Text style={styles.titleTextStyle}>긴자료코 경산 하점점</Text>
+            <Text style={styles.titleTextStyle}>{storeName}</Text>
             <View style={{display: 'flex', flexDirection: 'row', marginTop: 8}}>
                 <View>
-                    <Text style={styles.defaultBoldText}>16</Text>
+                    <Text style={styles.defaultBoldText}>{ownExpSiteCount}</Text>
                 </View>
                 <View style={styles.lineVertical} />
                 <View style={styles.journalCountContainer}>
                     <Text style={[styles.defaultBoldText, {marginRight: 6}]}>탐험일지</Text>
-                    <Text style={styles.defaultBoldText}>32개</Text>
+                    <Text style={styles.defaultBoldText}>{expJournalsCount}개</Text>
                 </View>
             </View>
         </View>
@@ -51,11 +51,11 @@ export default function StoreTitleView() {
       <View style={{display: 'flex', flexDirection: 'column'}}>
         <View style={{display: 'flex', flexDirection: 'row'}}>
             <Text style={[{width: 55}, styles.defaultBoldText]}>주소</Text>
-            <Text style={styles.defaultSemiText}>경북 경산시 하양읍 서사도리9로 25 드림스퀘어 1106호</Text>
+            <Text style={styles.defaultSemiText}>{storeAddress}</Text>
         </View>
         <View style={{display: 'flex', flexDirection: 'row', marginVertical: 16}}>
             <Text style={[{width: 55}, styles.defaultBoldText]}>전화번호</Text>
-            <Text style={styles.defaultSemiText}>053-123-4567</Text>
+            <Text style={styles.defaultSemiText}>{contactNumber}</Text>
         </View>
       </View>
     </View>
