@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { View, StyleSheet, Dimensions, Alert } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert, Platform } from 'react-native';
 import WebView from 'react-native-webview';
 import RNLocation from 'react-native-location';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -73,22 +73,27 @@ function KakaoMapView(){
           });
           RNLocation.getCurrentPermission()
             .then(currentPermission => {
+                console.log('Platform ', Platform)
                 console.log('GPS 권한을 허가하였는가 ? ', currentPermission)
-                if (currentPermission === 'denied'){
-                    Alert.alert(
-                        "Flambus",
-                        "앱을 정상적으로 이용하기 위해 위치 정보 권한을 허용해주세요.",
-                        [                              // 버튼 배열
-                        { text: "네", onPress: () => console.log("그렇다는데") }, //버튼 제목
-                        {
-                          text: "아니요",                              // 버튼 제목
-                          onPress: () => console.log("아니라는데"),     //onPress 이벤트시 콘솔창에 로그를 찍는다
-                          style: "cancel"
-                        }
-                      ],
-                      { cancelable: false }
-                    )
+                
+                if(Platform.OS === 'ios'){
+                    if (currentPermission === 'denied'){
+                        Alert.alert(
+                            "Flambus",
+                            "앱을 정상적으로 이용하기 위해 위치 정보 권한을 허용해주세요.",
+                            [                              // 버튼 배열
+                            { text: "네", onPress: () => console.log("그렇다는데") }, //버튼 제목
+                            {
+                              text: "아니요",                              // 버튼 제목
+                              onPress: () => console.log("아니라는데"),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+                              style: "cancel"
+                            }
+                          ],
+                          { cancelable: false }
+                        )
+                    }
                 }
+                
                 RNLocation.getLatestLocation({ timeout: 60000 })
                 .then(latestLocation => {
                     // Use the location here
