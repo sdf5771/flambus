@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import { MenuLogoActive, MoodLogoActive, ServiceLogoActive } from '../../assets/svg-components/journalFilter'
+import { FlagBlackLogo } from '../../assets/svg-components'
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window')
 
@@ -10,22 +12,50 @@ type TStoreTitleViewProps = {
     "contactNumber": string,
     "expJournalsCount": number,
     "ownExpSiteCount": number,
-    "representTag": null,
-    "representJournal": null
+    "representTag": {
+        tagIdx: number,
+        tagName: string
+    } | null,
+    "representJournal": {
+        reviewIdx: number,
+        likeCount: number,
+        creator: {
+            memberIdx: number,
+            memberName: string
+        },
+        "reviewImage": {
+            fileName: string,
+            fileSize: number,
+            imageUrl: number,
+        }[]
+    } | null
 }
 
 export default function StoreTitleView({storeIdx, storeName, storeAddress, contactNumber, expJournalsCount, ownExpSiteCount, representTag, representJournal}: TStoreTitleViewProps) {
-  return (
+    // tag 인덱스의 첫 번째 문자에 따라 로고 컴포넌트를 리턴
+    let LogoComponent = null;
+    let tagIdx = representTag?.tagIdx
+    if(tagIdx){
+        const firstIdx = tagIdx.toString().charAt(0);
+        if(firstIdx === '1'){
+            LogoComponent = MenuLogoActive
+        } else if(firstIdx === '2'){
+            LogoComponent = ServiceLogoActive
+        } else if(firstIdx === '3'){
+            LogoComponent = MoodLogoActive
+        }
+    }
+    return (
     <View style={styles.root}>
       <View style={styles.titleContainer}>
 
         <View style={styles.titleHeader}>
-            <View>
-
-                <Text style={styles.freshStoreText}>신선했던</Text>
+            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
+                {LogoComponent ? <LogoComponent/> : null}
+                <Text style={styles.freshStoreText}>{representTag?.tagName}</Text>
             </View>
-            <View>
-
+            <View style={styles.favStoreContainer}>
+                <FlagBlackLogo style={{marginTop: 7}} />
                 <Text style={styles.favStoreText}>나만의 탐험지 지정</Text>
             </View>
         </View>
@@ -33,8 +63,9 @@ export default function StoreTitleView({storeIdx, storeName, storeAddress, conta
         <View style={styles.storeTitleContainer}>
             <Text style={styles.titleTextStyle}>{storeName}</Text>
             <View style={{display: 'flex', flexDirection: 'row', marginTop: 8}}>
-                <View>
-                    <Text style={styles.defaultBoldText}>{ownExpSiteCount}</Text>
+                <View style={styles.flagContainer}>
+                    <FlagBlackLogo style={{marginTop: 3}} />
+                    <Text style={[styles.defaultBoldText, {marginLeft: 3}]}>{ownExpSiteCount}</Text>
                 </View>
                 <View style={styles.lineVertical} />
                 <View style={styles.journalCountContainer}>
@@ -89,6 +120,18 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         color: '#202020'
     },
+    favStoreContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    flagContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
     journalCountContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -119,6 +162,8 @@ const styles = StyleSheet.create({
         marginVertical: 16,
     },
     freshStoreText: {
+        marginTop: 6,
+        marginLeft: 6,
         fontWeight: '700',
         fontSize: 10,
         lineHeight: 12,

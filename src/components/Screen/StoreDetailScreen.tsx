@@ -6,6 +6,7 @@ import useStoreDetailScreenStore from '../../Stores/useStoreDetailScreenStore'
 
 const StoreDetailScreen = () => {
   const {storeData} = useStoreDetailScreenStore();
+  console.log('storeData ', storeData)
   return (
     <Templates.BottomSheet ChildrenComponent={() => (
         <ScrollView>
@@ -20,6 +21,10 @@ const StoreDetailScreen = () => {
               representJournal={storeData.representJournal} 
             />
             <View style={styles.marginVerticalView}/>
+            <Organisms.StoreThumbnailView
+              creator={storeData.representJournal ? storeData.representJournal.creator : null}
+              reviewImage={storeData.representJournal ? storeData.representJournal.reviewImage[0] : null}
+            />
         </ScrollView>
       )} />
   )

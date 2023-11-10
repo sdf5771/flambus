@@ -32,7 +32,7 @@ const BottomSheet = ({ChildrenComponent}: {ChildrenComponent: () => React.ReactN
             scrollTo(0);
         } else if(translateY.value < -SCREEN_HEIGHT / 1.5){
             // 만약 translateY 값이 SCREEN_HEIGHT 를 1.5으로 나눈 값보다 클 경우 MAX_TRANSLATE_Y(최대값)으로 설정함
-            scrollTo(MAX_TRANSLATE_Y)
+            scrollTo(MAX_TRANSLATE_Y + 130)
         }
     });
 

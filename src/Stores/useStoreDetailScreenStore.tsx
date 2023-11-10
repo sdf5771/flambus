@@ -10,7 +10,7 @@ export type TstoreData = {
     representTag: {
       tagIdx: number,
       tagName: string,
-    },
+    } | null,
     representJournal: {
       reviewIdx: Number,
       likeCount: Number,
@@ -25,12 +25,11 @@ export type TstoreData = {
           imageUrl: string,
         }
       ]
-    }
+    } | null,
   }
 
 const useStoreDetailScreenStore = create((set) => ({
   isUsed: false,
-  // setIsUsed: (data: boolean) => set({ isUsed: data }),
   setIsUsed: (data: boolean) => set((state: boolean) => ({
     isUsed: data
   })),
@@ -61,19 +60,7 @@ const useStoreDetailScreenStore = create((set) => ({
         }
       ]
     }
-  },  
-  // setStoreData: (newData: TstoreData) => set(
-  //       {
-  //         storeIdx: newData.storeIdx,
-  //         storeName: newData.storeName,
-  //         storeAddress: newData.storeAddress,
-  //         contactNumber: newData.contactNumber,
-  //         expJournalsCount: newData.expJournalsCount,
-  //         ownExpSiteCount: newData.ownExpSiteCount,
-  //         representTag: newData.representTag,
-  //         representJournal: newData.representJournal,
-  //       }
-  //   )
+  },
   setStoreData: (newData: TstoreData) => set((state: TstoreData) => ({
     ...state,
     storeData: newData
