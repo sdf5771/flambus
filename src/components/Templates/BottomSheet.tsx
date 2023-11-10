@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useCallback, useEffect, useImperativeHandle, useState } from 'react'
-import { Dimensions, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, Touchable, TouchableOpacity, View, Platform } from 'react-native'
 import { Gesture, GestureDetector, GestureEventPayload, GestureUpdateEvent } from 'react-native-gesture-handler'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import useStoreDetailScreenStore from '../../Stores/useStoreDetailScreenStore'
@@ -74,6 +74,20 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: SCREEN_HEIGHT,
         borderRadius: 25,
+        ...Platform.select({
+            ios: {
+                shadowColor: "rgb(50, 50, 50)",
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
+                shadowOffset: {
+                    height: -1,
+                    width: 0,
+                }
+            },
+            android: {
+                elevation: 3,
+            }
+        })
     },
     line: {
         width: 75,
