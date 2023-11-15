@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 import com.flambus.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.github.reactnativecommunity.location.RNLocationPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,6 +30,14 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;
+        }
+
+        @Override
+        protected List<ReactPackage> getPackages() {
+            return Arrays.asList(
+                    new MainReactPackage(),
+                    new RNLocationPackage()
+            );
         }
 
         @Override

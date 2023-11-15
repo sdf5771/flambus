@@ -1,8 +1,10 @@
 import React from 'react';
 import {SafeAreaView, Text, View, ScrollView} from 'react-native';
 import Organisms from '../Organisms';
+import store from '../../Stores';
 
 function LocationScreen({navigation}) {
+	const {isOpen: acornViewIsOpen} = store.useAcornViewStore();	
 	return (
 		<>
 			<SafeAreaView
@@ -10,7 +12,9 @@ function LocationScreen({navigation}) {
 			/>
 			<View style={{flex: 1}}>
 				<Organisms.LocationSearch />
-				{/* <Organisms.AcornView /> */}
+				{acornViewIsOpen ? 
+					<Organisms.AcornView />
+				: null}
 				<Organisms.KakaoMapView />
 			</View>
 		</>

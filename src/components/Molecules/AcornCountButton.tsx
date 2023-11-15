@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {SafeAreaView, Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import { AcornLogoActive, AcornLogoDefault, AcornButtonLineDefault, AcornButtonLineActive } from '../../assets/svg-components';
+import store from '../../Stores';
 
 function AcornCountButton(){
     const [acornActive, setAcornActive] = useState<boolean>(false);
+    const {setIsOpen} = store.useAcornViewStore();
     
     const stateObj = {
         rootStyle: acornActive ? styles.acornRootActive : styles.acornRootDefault,
@@ -14,6 +16,7 @@ function AcornCountButton(){
     
     const onPressHandler = () => {
         setAcornActive(!acornActive);
+        setIsOpen(!acornActive);
     }
     
     return (
