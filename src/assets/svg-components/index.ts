@@ -5,6 +5,8 @@ import AcornButtonLineActive from './AcornButtonLineActive'
 import AcornChargeLogoDefault from './AcornChargeLogoDefault'
 import AcornChargeLogoActive from './AcornChargeLogoActive'
 import FlagBlackLogo from './FlagBlackLogo'
+import FlambusLogo from './FlambusLogo'
+
 export {
     AcornLogoActive,
     AcornLogoDefault,
@@ -13,4 +15,5 @@ export {
     AcornChargeLogoDefault,
     AcornChargeLogoActive,
     FlagBlackLogo,
+    FlambusLogo
 }
