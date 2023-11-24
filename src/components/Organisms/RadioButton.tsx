@@ -14,7 +14,7 @@ export default function RadioButton({text, color, isActive, setIsActive}: Tprops
     }
   return (
     <Pressable style={{display: 'flex', flexDirection: 'row'}} onPress={onPressHandler}>
-      <View style={[styles.parentCircle, {borderColor: color ? color : '#1a1a1a'}]}>
+      <View style={[styles.parentCircle, {borderColor: !isActive ? '#D9D9D9' : color ? color : '#1a1a1a'}]}>
         {isActive ? <View style={[styles.childCircle, {backgroundColor: color ? color : '#1a1a1a'}]}></View> : null}
       </View>
       { text ? <Text style={{marginLeft: 4}}>{text}</Text> : null }
