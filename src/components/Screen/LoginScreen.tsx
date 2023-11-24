@@ -4,7 +4,7 @@ import { FlambusLogo } from '../../assets/svg-components'
 import Atoms from '../Atoms'
 import Organisms from '../Organisms';
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
     const [emailVal, setEmailVal] = useState('');
     const [passwordVal, setPasswordVal] = useState('');
     const [radioIsActive, setRadioIsActive] = useState(false);
@@ -56,7 +56,7 @@ export default function LoginScreen() {
         </View>
         <View style={{marginTop: 40, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
             <Text style={styles.createAccountDescription}>계정이 없으시다면?</Text>
-            <Pressable>
+            <Pressable onPress={() => navigation.push('EmailInput')}>
                 <Text style={styles.createAccountText}>회원가입</Text>
             </Pressable>
         </View>
