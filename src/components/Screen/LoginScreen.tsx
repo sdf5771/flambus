@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Pressable, Button } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Pressable, Button, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 import { FlambusLogo } from '../../assets/svg-components'
 import Atoms from '../Atoms'
 import Organisms from '../Organisms';
@@ -24,14 +24,14 @@ export default function LoginScreen({navigation}) {
                 <Atoms.PublicBorderInputBox
                     placeHolder='이메일을 입력하세요.'
                     value={emailVal}
-                    setValue={setEmailVal}
+                    onChangeHandler={(event: NativeSyntheticEvent<TextInputChangeEventData>) => setEmailVal(event.nativeEvent.text)}
                     type='emailAddress'
                 />
             </View>
             <Atoms.PublicBorderInputBox
                 placeHolder='비밀번호를 입력하세요.'
                 value={passwordVal}
-                setValue={setPasswordVal}
+                onChangeHandler={(event: NativeSyntheticEvent<TextInputChangeEventData>) => setPasswordVal(event.nativeEvent.text)}
                 type='password'
             />
         </View>

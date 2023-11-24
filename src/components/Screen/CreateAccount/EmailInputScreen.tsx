@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Pressable, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView, Pressable, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 import React, {useState} from 'react'
 import CreateAccountTemplete from '../../Templates/CreateAccount'
 import { NavigationProp } from '@react-navigation/native'
@@ -6,12 +6,31 @@ import Atoms from '../../Atoms'
 
 export default function EmailInputScreen({navigation}: {navigation: NavigationProp}) {
     const [emailVal, setEmailVal] = useState('');
-
-    const onPressHandler = () => {
+    const [isError, setIsError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');  
+    const inputOnChangeHandler = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+        setEmailVal(event.nativeEvent.text)
         const regex = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i
-
-        if(regex.test(emailVal)){
+        if(event.nativeEvent.text.length != 0){
+            if(!regex.test(event.nativeEvent.text)){
+                setIsError(true)
+                setErrorMsg('유효하지 않은 이메일 주소입니다. 다시 입력해주세요!')
+            } else {
+                setIsError(false)
+                setErrorMsg('')
+            }
+        } else {
+            setIsError(false)
+            setErrorMsg('')
+        }
+    }
+    const onPressHandler = () => {
+        if(emailVal.length !== 0 && isError !== true){
             navigation.push('EmailAuth', {email: emailVal})
+        }
+        if(emailVal.length === 0){
+            setIsError(true)
+            setErrorMsg('사용할 이메일을 입력해주세요.')
         }
     }
   return (
@@ -23,8 +42,10 @@ export default function EmailInputScreen({navigation}: {navigation: NavigationPr
                 <Atoms.PublicBorderInputBox
                     placeHolder='이메일을 입력하세요.'
                     value={emailVal}
-                    setValue={setEmailVal}
+                    onChangeHandler={inputOnChangeHandler}
                     type='emailAddress'
+                    isError={isError}
+                    errorMsg={errorMsg}
                 />
             </View>
       </View>

@@ -1,12 +1,66 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { SafeAreaView, View, Text, Pressable, NativeSyntheticEvent, TextInputChangeEventData, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
 import CreateAccountTemplete from '../../Templates/CreateAccount'
+import Atoms from '../../Atoms';
 
 export default function NickNameInputScreen({navigation}) {
+    const [nickname, setNickname] = useState('');
+    const [isError, setIsError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const inputOnChangeHandler = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+        setNickname(event.nativeEvent.text)
+
+        if(event.nativeEvent.text.length !== 0){
+            setIsError(false)
+            setErrorMsg('')
+        }
+    }
+
+    const onPressHandler = () => {
+        if(nickname !== ''){
+            navigation.push('SignUpComplete', {nickname: nickname})
+        } else {
+            setIsError(true)
+            setErrorMsg('사용하실 닉네임을 입력해주세요.')
+        }
+    }
+
   return (
-    <View>
+    <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
         <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
-      <Text>NickNameInputScreen</Text>
-    </View>
+      <View style={styles.inputContainer}>
+            <Text style={styles.titleText}>닉네임</Text>
+            <View style={{marginTop: 8}}>
+                <Atoms.PublicBorderInputBox
+                    placeHolder='사용할 닉네임을 입력해주세요.'
+                    value={nickname}
+                    onChangeHandler={inputOnChangeHandler}
+                    type='text'
+                    isError={isError}
+                    errorMsg={errorMsg}
+                />
+            </View>
+      </View>
+      <View style={styles.btnContainer}>
+        <Pressable onPress={onPressHandler} style={styles.btn}>
+            <Text style={styles.btnText}>가입완료 하기</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+    inputContainer: {marginTop: 6, paddingHorizontal: 16},
+    titleText: {fontWeight: '600', fontSize: 20, lineHeight: 28, letterSpacing: -0.04, color: '#1A1A1A'},
+    btnContainer: {position: 'absolute', bottom: 0, width: '100%'},
+    btn: {display: 'flex', justifyContent: 'center', alignItems: 'center', height: 56, backgroundColor: '#FFBA33'},
+    btnText: {
+        fontWeight: '600',
+        fontSize: 16,
+        lineHeight: 19,
+        letterSpacing: -0.04,
+        color: '#333333',
+    }
+})

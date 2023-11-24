@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Pressable, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView, Pressable, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import CreateAccountTemplete from '../../Templates/CreateAccount'
 import Atoms from '../../Atoms';
@@ -61,7 +61,7 @@ export default function EmailAuthScreen({navigation, route}) {
                 <Atoms.PublicBorderInputBox
                     placeHolder='수신받은 인증코드를 입력해주세요.'
                     value={authCode}
-                    setValue={setAuthCode}
+                    onChangeHandler={(event: NativeSyntheticEvent<TextInputChangeEventData>) => setAuthCode(event.nativeEvent.text)}
                     type='text'
                 />
             </View>
@@ -73,7 +73,7 @@ export default function EmailAuthScreen({navigation, route}) {
         </View>
       </View>
       <View style={styles.btnContainer}>
-        <Pressable onPress={() => navigation.push('EmailAuth')} style={styles.btn}>
+        <Pressable onPress={() => navigation.push('PasswordInput')} style={styles.btn}>
             <Text style={styles.btnText}>다음으로</Text>
         </Pressable>
       </View>
