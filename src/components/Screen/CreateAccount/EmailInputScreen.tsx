@@ -16,7 +16,7 @@ export default function EmailInputScreen({navigation}: {navigation: NavigationPr
                 navigation.push('EmailAuth', {email: emailVal})
             } else {
                 setIsError(true)
-                setErrorMsg('이미 가입된 이메일입니다.')
+                setErrorMsg('이미 가입된 이메일입니다!')
             }
         }
     });

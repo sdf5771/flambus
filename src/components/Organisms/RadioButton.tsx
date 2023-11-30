@@ -18,7 +18,7 @@ export default function RadioButton({text, color, isActive, setIsActive, underli
       <View style={[styles.parentCircle, {borderColor: !isActive ? '#D9D9D9' : color ? color : '#1a1a1a'}]}>
         {isActive ? <View style={[styles.childCircle, {backgroundColor: color ? color : '#1a1a1a'}]}></View> : null}
       </View>
-      { text ? <Text style={[styles.descriptionText, {textDecorationLine: underline ? 'underline' : 'none'}]}>{text}</Text> : null }
+      { text ? <Text style={[styles.descriptionText, {textDecorationLine: underline ? 'underline' : 'none', color: isActive ? '#1A1A1A' : '#999999'}]}>{text}</Text> : null }
     </Pressable>
   )
 }
@@ -45,6 +45,5 @@ const styles = StyleSheet.create({
       fontSize: 14,
       lineHeight: 22,
       letterSpacing: -0.04,
-      color: '#999999',
     },
 })
