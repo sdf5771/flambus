@@ -55,43 +55,47 @@ export default function PasswordInputScreen({navigation}) {
         }
     }
   return (
-    <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
-        <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
-      <View style={styles.inputContainer}>
-            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                <Text style={styles.titleText}>비밀번호</Text>
-                <Text style={{fontWeight: '600', fontSize: 12, lineHeight: 18, letterSpacing: -0.04, color: '#CCCCCC',}}>대문자, 소문자, 특수기호를 포함한 8자 이상</Text>
-            </View>
-            <View style={{marginTop: 8}}>
-                <Atoms.PublicBorderInputBox
-                    placeHolder='비밀번호를 입력하세요.'
-                    value={password}
-                    onChangeHandler={passwordOnChangeHandler}
-                    type='password'
-                    isError={pwIsError}
-                    errorMsg={pwErrMsg}
-                />
-            </View>
-      </View>
-      <View style={[styles.inputContainer, {marginTop: 24}]}>
-            <Text style={styles.titleText}>비밀번호 확인</Text>
-            <View style={{marginTop: 8}}>
-                <Atoms.PublicBorderInputBox
-                    placeHolder='다시 한번 입력하세요.'
-                    value={passwordConfirm}
-                    onChangeHandler={passwordConfirmOnChangeHandler}
-                    type='password'
-                    isError={pwConfirmIsError}
-                    errorMsg={pwConfirmErrMsg}
-                />
-            </View>
-      </View>
-      <View style={styles.btnContainer}>
-        <Pressable onPress={onPressHandler} style={styles.btn}>
-            <Text style={styles.btnText}>다음으로</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <>
+        <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
+            <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
+        <View style={styles.inputContainer}>
+                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <Text style={styles.titleText}>비밀번호</Text>
+                    <Text style={{fontWeight: '600', fontSize: 12, lineHeight: 18, letterSpacing: -0.04, color: '#CCCCCC',}}>대문자, 소문자, 특수기호를 포함한 8자 이상</Text>
+                </View>
+                <View style={{marginTop: 8}}>
+                    <Atoms.PublicBorderInputBox
+                        placeHolder='비밀번호를 입력하세요.'
+                        value={password}
+                        onChangeHandler={passwordOnChangeHandler}
+                        type='password'
+                        isError={pwIsError}
+                        errorMsg={pwErrMsg}
+                    />
+                </View>
+        </View>
+        <View style={[styles.inputContainer, {marginTop: 24}]}>
+                <Text style={styles.titleText}>비밀번호 확인</Text>
+                <View style={{marginTop: 8}}>
+                    <Atoms.PublicBorderInputBox
+                        placeHolder='다시 한번 입력하세요.'
+                        value={passwordConfirm}
+                        onChangeHandler={passwordConfirmOnChangeHandler}
+                        type='password'
+                        isError={pwConfirmIsError}
+                        errorMsg={pwConfirmErrMsg}
+                    />
+                </View>
+        </View>
+        <View style={styles.btnContainer}>
+            <Atoms.ProgressBar page={3} pages={4}/>
+            <Pressable onPress={onPressHandler} style={styles.btn}>
+                <Text style={styles.btnText}>다음으로</Text>
+            </Pressable>
+        </View>
+        </SafeAreaView>
+        <SafeAreaView style={{backgroundColor: '#FFBA33'}}/>
+    </>
   )
 }
 

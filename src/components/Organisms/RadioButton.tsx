@@ -5,19 +5,20 @@ type Tprops = {
     text? : string,
     color? : string,
     isActive : boolean,
-    setIsActive: React.Dispatch<React.SetStateAction<boolean>>
+    setIsActive: React.Dispatch<React.SetStateAction<boolean>>,
+    underline?: boolean,
 }
 
-export default function RadioButton({text, color, isActive, setIsActive}: Tprops) {
+export default function RadioButton({text, color, isActive, setIsActive, underline}: Tprops) {
     const onPressHandler = (event: GestureResponderEvent) => {
         setIsActive(!isActive)
     }
   return (
-    <Pressable style={{display: 'flex', flexDirection: 'row'}} onPress={onPressHandler}>
+    <Pressable style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}} onPress={onPressHandler}>
       <View style={[styles.parentCircle, {borderColor: !isActive ? '#D9D9D9' : color ? color : '#1a1a1a'}]}>
         {isActive ? <View style={[styles.childCircle, {backgroundColor: color ? color : '#1a1a1a'}]}></View> : null}
       </View>
-      { text ? <Text style={{marginLeft: 4}}>{text}</Text> : null }
+      { text ? <Text style={[styles.descriptionText, {textDecorationLine: underline ? 'underline' : 'none'}]}>{text}</Text> : null }
     </Pressable>
   )
 }
@@ -37,5 +38,13 @@ const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 8,
-    }
+    },
+    descriptionText: {
+      marginLeft: 4,
+      fontWeight: '600',
+      fontSize: 14,
+      lineHeight: 22,
+      letterSpacing: -0.04,
+      color: '#999999',
+    },
 })

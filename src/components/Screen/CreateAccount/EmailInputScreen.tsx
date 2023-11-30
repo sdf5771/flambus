@@ -34,27 +34,31 @@ export default function EmailInputScreen({navigation}: {navigation: NavigationPr
         }
     }
   return (
-    <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
-        <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
-      <View style={styles.inputContainer}>
-            <Text style={styles.titleText}>이메일</Text>
-            <View style={{marginTop: 8}}>
-                <Atoms.PublicBorderInputBox
-                    placeHolder='이메일을 입력하세요.'
-                    value={emailVal}
-                    onChangeHandler={inputOnChangeHandler}
-                    type='emailAddress'
-                    isError={isError}
-                    errorMsg={errorMsg}
-                />
-            </View>
-      </View>
-      <View style={styles.btnContainer}>
-        <Pressable onPress={onPressHandler} style={styles.btn}>
-            <Text style={styles.btnText}>다음으로</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <>
+        <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
+            <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
+        <View style={styles.inputContainer}>
+                <Text style={styles.titleText}>이메일</Text>
+                <View style={{marginTop: 8}}>
+                    <Atoms.PublicBorderInputBox
+                        placeHolder='이메일을 입력하세요.'
+                        value={emailVal}
+                        onChangeHandler={inputOnChangeHandler}
+                        type='emailAddress'
+                        isError={isError}
+                        errorMsg={errorMsg}
+                    />
+                </View>
+        </View>
+        <View style={styles.btnContainer}>
+            <Atoms.ProgressBar page={1} pages={4}/>
+            <Pressable onPress={onPressHandler} style={styles.btn}>
+                <Text style={styles.btnText}>다음으로</Text>
+            </Pressable>
+        </View>
+        </SafeAreaView>
+        <SafeAreaView style={{backgroundColor: '#FFBA33'}}/>
+    </>
   )
 }
 

@@ -19,9 +19,10 @@ function RootNavigator() {
 			<Stack.Navigator screenOptions={{headerShown: false}}>
 				{
 					isLoggedIn ? 
-						<Stack.Screen name="Root" component={Navigator.BottomTabNavigator} />
+						null
 					: <Stack.Screen name='Login' component={Screen.LoginScreen} />
 				}
+				<Stack.Screen name="Root" component={Navigator.BottomTabNavigator} />
 				<Stack.Screen name='EmailInput' component={CreateAccountScreen.EmailInputScreen} />
 				<Stack.Screen name='EmailAuth' component={CreateAccountScreen.EmailAuthScreen} />
 				<Stack.Screen name='PasswordInput' component={CreateAccountScreen.PasswordInputScreen} />

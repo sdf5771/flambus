@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const REFRESH_TOKEN_KEY = 'flambus-refreshToken'
+const ACCESS_TOKEN_KEY = 'flambus-accessToken'
 
 function useAuth(){
     const [loggedIn, setLoggedIn] = useState(false); 
@@ -17,6 +18,10 @@ function useAuth(){
         }
     }
 
+    const setAccessToken = async (token: string) => {
+        await AsyncStorage.setItem(ACCESS_TOKEN_KEY, token)
+    }
+
     useEffect(() => {
         isLoggedIn();
     }, [AsyncStorage.getItem(REFRESH_TOKEN_KEY)])
@@ -24,7 +29,7 @@ function useAuth(){
 
     return {
         isLoggedIn: loggedIn,
-
+        setAccessToken,
     }
 }
 

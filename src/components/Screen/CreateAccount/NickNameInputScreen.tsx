@@ -27,27 +27,34 @@ export default function NickNameInputScreen({navigation}) {
     }
 
   return (
-    <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
-        <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
-      <View style={styles.inputContainer}>
-            <Text style={styles.titleText}>닉네임</Text>
-            <View style={{marginTop: 8}}>
-                <Atoms.PublicBorderInputBox
-                    placeHolder='사용할 닉네임을 입력해주세요.'
-                    value={nickname}
-                    onChangeHandler={inputOnChangeHandler}
-                    type='text'
-                    isError={isError}
-                    errorMsg={errorMsg}
-                />
-            </View>
-      </View>
-      <View style={styles.btnContainer}>
-        <Pressable onPress={onPressHandler} style={styles.btn}>
-            <Text style={styles.btnText}>가입완료 하기</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <>
+        <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
+            <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
+                <View style={styles.inputContainer}>
+                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <Text style={styles.titleText}>닉네임</Text>
+                        <Text style={{fontWeight: '600', fontSize: 12, lineHeight: 18, letterSpacing: -0.04, color: '#CCCCCC'}}>10자리 이하</Text>
+                    </View>
+                    <View style={{marginTop: 8}}>
+                        <Atoms.PublicBorderInputBox
+                            placeHolder='사용하실 닉네임을 입력해주세요.'
+                            value={nickname}
+                            onChangeHandler={inputOnChangeHandler}
+                            type='text'
+                            isError={isError}
+                            errorMsg={errorMsg}
+                    />
+                </View>
+        </View>
+        <View style={styles.btnContainer}>
+            <Atoms.ProgressBar page={4} pages={4}/>
+            <Pressable onPress={onPressHandler} style={styles.btn}>
+                <Text style={styles.btnText}>가입완료 하기</Text>
+            </Pressable>
+        </View>
+        </SafeAreaView>
+        <SafeAreaView style={{backgroundColor: '#FFBA33'}}/>
+    </>
   )
 }
 

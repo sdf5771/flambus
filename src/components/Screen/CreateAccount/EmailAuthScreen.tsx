@@ -31,53 +31,57 @@ export default function EmailAuthScreen({navigation, route}) {
         return () => clearInterval(timer)
     }, [])
   return (
-    <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
-        <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
-      <View style={styles.inputContainer}>
-            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styles.titleText}>이메일 인증</Text>
-                    <Text style={{
-                        marginLeft: 8, 
-                        fontWeight: '600', 
-                        fontSize: 14, 
-                        lineHeight: 22, 
-                        letterSpacing: -0.04, 
-                        color: '#FFBA33'}}>0{minute}:{second >= 10 ? second : `0${second}`}</Text>
-                </View>
-                <View>
-                    <Pressable>
+    <>
+        <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#ffffff'}}>
+            <CreateAccountTemplete.CreateAccountHeader navigation={navigation} />
+        <View style={styles.inputContainer}>
+                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styles.titleText}>이메일 인증</Text>
                         <Text style={{
+                            marginLeft: 8, 
                             fontWeight: '600', 
                             fontSize: 14, 
-                            lineHeight: 17, 
+                            lineHeight: 22, 
                             letterSpacing: -0.04, 
-                            textDecorationLine: 'underline', 
-                            color: '#000000'}}>재발송 요청</Text>
-                    </Pressable>
+                            color: '#FFBA33'}}>0{minute}:{second >= 10 ? second : `0${second}`}</Text>
+                    </View>
+                    <View>
+                        <Pressable>
+                            <Text style={{
+                                fontWeight: '600', 
+                                fontSize: 14, 
+                                lineHeight: 17, 
+                                letterSpacing: -0.04, 
+                                textDecorationLine: 'underline', 
+                                color: '#000000'}}>재발송 요청</Text>
+                        </Pressable>
+                    </View>
                 </View>
-            </View>
-            <View style={{marginTop: 8}}>
-                <Atoms.PublicBorderInputBox
-                    placeHolder='수신받은 인증코드를 입력해주세요.'
-                    value={authCode}
-                    onChangeHandler={(event: NativeSyntheticEvent<TextInputChangeEventData>) => setAuthCode(event.nativeEvent.text)}
-                    type='text'
-                />
-            </View>
-      </View>
-      <View style={{marginTop: 16, paddingHorizontal: 16}}>
-        <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 52, borderRadius: 4, backgroundColor: '#F1F1F1'}}>
-            <Text style={styles.prevInputText}>입력했던 이메일</Text>
-            <Text style={styles.prevInputText}>{route.params.email}</Text>
+                <View style={{marginTop: 8}}>
+                    <Atoms.PublicBorderInputBox
+                        placeHolder='수신받은 인증코드를 입력해주세요.'
+                        value={authCode}
+                        onChangeHandler={(event: NativeSyntheticEvent<TextInputChangeEventData>) => setAuthCode(event.nativeEvent.text)}
+                        type='text'
+                    />
+                </View>
         </View>
-      </View>
-      <View style={styles.btnContainer}>
-        <Pressable onPress={() => navigation.push('PasswordInput')} style={styles.btn}>
-            <Text style={styles.btnText}>다음으로</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+        <View style={{marginTop: 16, paddingHorizontal: 16}}>
+            <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 52, borderRadius: 4, backgroundColor: '#F1F1F1'}}>
+                <Text style={styles.prevInputText}>입력했던 이메일</Text>
+                <Text style={styles.prevInputText}>{route.params.email}</Text>
+            </View>
+        </View>
+        <View style={styles.btnContainer}>
+            <Atoms.ProgressBar page={2} pages={4}/>
+            <Pressable onPress={() => navigation.push('PasswordInput')} style={styles.btn}>
+                <Text style={styles.btnText}>다음으로</Text>
+            </Pressable>
+        </View>
+        </SafeAreaView>
+        <SafeAreaView style={{backgroundColor: '#FFBA33'}}/>
+    </>
   )
 }
 

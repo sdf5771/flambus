@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontWeight: '600',
-        fontSize: 12,
-        lineHeight: 14,
+        fontSize: 14,
+        lineHeight: 22,
         textAlign: 'center',
         letterSpacing: -0.04,
         color: '#CCCCCC'
