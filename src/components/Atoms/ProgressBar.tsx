@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
 export default function ProgressBar({page, pages}: {page: number, pages: number}) {
-    console.log(page * 100 / pages)
   return (
     <View style={styles.root}>
       <View style={[styles.progressBar, {width: `${page * 100 / pages}%`}]}></View>

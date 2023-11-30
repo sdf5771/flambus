@@ -3,11 +3,23 @@ import React, {useState} from 'react'
 import CreateAccountTemplete from '../../Templates/CreateAccount'
 import { NavigationProp } from '@react-navigation/native'
 import Atoms from '../../Atoms'
+import { useMutation } from '@tanstack/react-query'
+import { getCheckEmail } from '../../../queries'
 
 export default function EmailInputScreen({navigation}: {navigation: NavigationProp}) {
     const [emailVal, setEmailVal] = useState('');
     const [isError, setIsError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');  
+    const {mutate: checkEmailRequest} = useMutation(getCheckEmail, {
+        onSuccess: (data: {"data": boolean, "message": string, "resultCode": string, "success": boolean}) => {
+            if(data.data){
+                navigation.push('EmailAuth', {email: emailVal})
+            } else {
+                setIsError(true)
+                setErrorMsg('이미 가입된 이메일입니다.')
+            }
+        }
+    });
     const inputOnChangeHandler = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
         setEmailVal(event.nativeEvent.text)
         const regex = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i
@@ -26,7 +38,8 @@ export default function EmailInputScreen({navigation}: {navigation: NavigationPr
     }
     const onPressHandler = () => {
         if(emailVal.length !== 0 && isError !== true){
-            navigation.push('EmailAuth', {email: emailVal})
+            checkEmailRequest({email: emailVal})
+            
         }
         if(emailVal.length === 0){
             setIsError(true)

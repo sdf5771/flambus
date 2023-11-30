@@ -75,7 +75,7 @@ export default function EmailAuthScreen({navigation, route}) {
         </View>
         <View style={styles.btnContainer}>
             <Atoms.ProgressBar page={2} pages={4}/>
-            <Pressable onPress={() => navigation.push('PasswordInput')} style={styles.btn}>
+            <Pressable onPress={() => navigation.push('PasswordInput', {email: route.params.email})} style={styles.btn}>
                 <Text style={styles.btnText}>다음으로</Text>
             </Pressable>
         </View>

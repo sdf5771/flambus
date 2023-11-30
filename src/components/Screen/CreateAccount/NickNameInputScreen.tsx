@@ -2,12 +2,29 @@ import { SafeAreaView, View, Text, Pressable, NativeSyntheticEvent, TextInputCha
 import React, { useState } from 'react'
 import CreateAccountTemplete from '../../Templates/CreateAccount'
 import Atoms from '../../Atoms';
+import { useMutation } from '@tanstack/react-query';
+import createAccount from '../../../queries/createAccount';
 
-export default function NickNameInputScreen({navigation}) {
+export default function NickNameInputScreen({navigation, route}) {
     const [nickname, setNickname] = useState('');
     const [isError, setIsError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-
+    const {mutate: createAccountRequest} = useMutation(createAccount, {
+        onSuccess: (res : {
+            "success": boolean,
+            "resultCode": string,
+            "message": string,
+            "data": null,
+          }) => {
+            if(res.success){
+                navigation.push('SignUpComplete', {nickname: nickname})
+            } else {
+                setIsError(true)
+                setErrorMsg(res.message)
+            }
+        }
+    })
+    
     const inputOnChangeHandler = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
         setNickname(event.nativeEvent.text)
 
@@ -19,7 +36,7 @@ export default function NickNameInputScreen({navigation}) {
 
     const onPressHandler = () => {
         if(nickname !== ''){
-            navigation.push('SignUpComplete', {nickname: nickname})
+            createAccountRequest({email: route.params.email, password: route.params.password, nickname: nickname})
         } else {
             setIsError(true)
             setErrorMsg('사용하실 닉네임을 입력해주세요.')

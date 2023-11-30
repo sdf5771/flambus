@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CreateAccountTemplete from '../../Templates/CreateAccount'
 import Atoms from '../../Atoms'
 
-export default function PasswordInputScreen({navigation}) {
+export default function PasswordInputScreen({navigation, route}) {
     const [password, setPassword] = useState('');
     const [pwIsError, setPwIsError] = useState(false);
     const [pwErrMsg, setPwErrMsg] = useState(''); 
@@ -51,7 +51,7 @@ export default function PasswordInputScreen({navigation}) {
         const isEmptyPassword = password.length !== 0 && passwordConfirm.length !== 0
         
         if(isEmptyPassword && !pwIsError && !pwConfirmIsError){
-            navigation.push('NickNameInput')
+            navigation.push('NickNameInput', {email: route.params.email, password: password})
         }
     }
   return (
