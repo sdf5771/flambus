@@ -14,8 +14,6 @@ Webview Github : https://github.com/sdf5771/flambus-web
 프로젝트 개요
 
 - 맛집 정보를 아카이빙하며 탐험한다는 게임적 컨셉을 녹인 게이미피케이션 ‘맛집 정보 제공 플랫폼’
-- SEO를 통한 검색 유입
-- Google Ads 를 통한 광고 수익
 - Platform
     - ios / android Mobile Application
 
