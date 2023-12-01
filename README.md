@@ -24,7 +24,7 @@ Webview Github : https://github.com/sdf5771/flambus-web
 - 프로젝트 전체 인원
     - **Front-End Developer - 김섭우**
     - Back-End Developer - 최성우, 이시영
-    - Designer - ****황현우, 최지원, 이주석
+    - Designer - 황현우, 최지원, 이주석
 - 역할과 기여도
     - 프로젝트의 전반적인 Front-End 개발
     - 모바일 어플리케이션 구조 설계
